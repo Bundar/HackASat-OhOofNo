@@ -63,8 +63,8 @@ iter_ = 0
 while(True):
 	log.info("Iteration: " + str(iter_))
 	## Get input immage data
-	if iter_ == 2:
-		break
+	# if iter_ == 2:
+		# break
 	try:
 		img_string = r.recvuntil("\n\n").decode()
 	except:
@@ -100,7 +100,7 @@ while(True):
 	img = Image.fromarray(array)
 	img.save('starMapIter'+str(iter_)+'.png')
 	iter_ += 1
-	r.sendline('\n')
+	r.sendline('')
 	log.info(r.recvline().decode())
 
 
