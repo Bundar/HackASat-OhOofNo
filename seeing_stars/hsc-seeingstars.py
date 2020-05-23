@@ -63,8 +63,12 @@ iter_ = 0
 while(True):
 	log.info("Iteration: " + str(iter_))
 	## Get input immage data
-	img_string = r.recvuntil("\n\n").decode()
-
+	if iter_ == 2:
+		break
+	try:
+		img_string = r.recvuntil("\n\n").decode()
+	except:
+		break
 	# log.info(img_string)
 	lines = img_string.split('\n')
 	lines.pop()
