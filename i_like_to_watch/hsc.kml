@@ -1,42 +1,4 @@
-# from skyfield.api import EarthSatellite, load, Topos
-from skyfield import api
-from pwn import *
-
-ts = api.load.timescale()
-
-
-# ts = load.timescale()
-## Start Connection
-r = remote('watch.satellitesabove.me', 5011)
-log.info(r.recvuntil("\n").decode())
-
-## Send Ticket
-r.sendline("victor7694yankee:GCHDoBeg13q5bL4Vtzqmye5w8CGybi_apWnPt3DYn_WyBIJjDQnulaqsEUbm5VpYVw")
-log.info(r.recvuntil('\n\n').decode())
-r.recvline()
-
-line1 = r.recvline().decode()
-line2 = r.recvline().decode()
-
-satellite = api.EarthSatellite(line1, line2, 'HSC', ts)
-datetime = ts.utc(2020, 3, 26, 21, 54, 36)
-
-geocentric = satellite.at(datetime)
-subpoint = geocentric.subpoint()
-
-lat = subpoint.latitude
-longitude = subpoint.longitude
-alt = int(subpoint.elevation.m)
-r.recvline()
-link = r.recvline().decode().split(' ')[10]
-r.recvline()
-
-log.info("lat: "+str(lat))
-log.info("long: "+ str(longitude))
-log.info("elv: "+ str(alt))
-
-r.close()
-kml = """<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Folder>
     <name>HackASatCompetition</name>
@@ -55,16 +17,17 @@ kml = """<?xml version="1.0" encoding="UTF-8"?>
           <when>2020-03-26T21:54:36</when>
         </gx:TimeStamp>
         <!-- specific to LookAt -->
-        <longitude>"""+str(longitude)+"""</longitude>            	<!-- kml:angle180 -->
-        <latitude>"""+str(lat)+"""</latitude>              	<!-- kml:angle90 -->
-        <altitude>"""+str(alt)+"""</altitude>              		<!-- double -->
+        <longitude>-75deg 10' 33.5"</longitude>            	<!-- kml:angle180 -->
+        <latitude>40deg 45' 41.1"</latitude>              	<!-- kml:angle90 -->
+        <altitude>419894</altitude>              		<!-- double -->
         <heading>61.9928</heading>                <!-- kml:angle360 -->
         <tilt>83.3154</tilt>                     <!-- kml:anglepos90 -->
         <range>15.48919755219337</range>                     <!-- double -->
         <altitudeMode>clampToGround</altitudeMode>
       </LookAt>
       <Link>
-        <href>"""+str(link)+"""</href>
+        <href>http://18.191.77.141:25866/cgi-bin/HSCKML.py
+</href>
         <refreshInterval>1</refreshInterval>
         <viewRefreshMode>onStop</viewRefreshMode>
         <viewRefreshTime>1</viewRefreshTime>
@@ -72,11 +35,4 @@ kml = """<?xml version="1.0" encoding="UTF-8"?>
       </Link>
     </NetworkLink>
   </Folder>
-</kml>"""
-
-
-f = open("hsc.kml", "w")
-f.write(kml)
-f.close()
-
-print(kml)
+</kml>
