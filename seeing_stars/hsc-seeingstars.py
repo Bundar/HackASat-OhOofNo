@@ -17,7 +17,7 @@ def printSurroundings(i,j):
 	print(surroundings)
 
 def checkStar(i, j):
-	printSurroundings(i,j)
+	# printSurroundings(i,j)
 	# printSurroundings(int(starCoord.split(',')[0]),int(starCoord.split(',')[1]))
 	# for each contiguous 255 calc surrounding sum and find max as center.
 	if not ( 0 <= i < len(img_arr) and 0 <= j < len(img_arr[0])) and not visited[i][j]:
