@@ -2,6 +2,11 @@
 from skyfield import api
 from pwn import *
 
+def dms2dd(dms):
+	degMinSec = dms.split(' ')
+	return str(float(degMinSec[0][:-3]) + float(degMinSec[1][:-1])/60 + float(degMinSec[2][:-1])/3600)
+
+
 ts = api.load.timescale()
 
 
@@ -24,8 +29,8 @@ datetime = ts.utc(2020, 3, 26, 21, 54, 36)
 geocentric = satellite.at(datetime)
 subpoint = geocentric.subpoint()
 
-lat = subpoint.latitude
-longitude = subpoint.longitude
+lat = str(subpoint.latitude)
+longitude = str(subpoint.longitude)
 alt = int(subpoint.elevation.m)
 r.recvline()
 link = r.recvline().decode().split(' ')[10]
@@ -34,7 +39,9 @@ r.recvline()
 log.info("lat: "+str(lat))
 log.info("long: "+ str(longitude))
 log.info("elv: "+ str(alt))
-
+log.info("Link: " + link)
+#
+      	
 r.close()
 kml = """<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
@@ -52,11 +59,11 @@ kml = """<?xml version="1.0" encoding="UTF-8"?>
       <flyToView>0</flyToView>
       <LookAt id="ID">
       	<gx:TimeStamp>
-          <when>2020-03-26T21:54:36</when>
+        	<when>2020-03-26T21:54:36</when>
         </gx:TimeStamp>
         <!-- specific to LookAt -->
-        <longitude>"""+str(longitude)+"""</longitude>            	<!-- kml:angle180 -->
-        <latitude>"""+str(lat)+"""</latitude>              	<!-- kml:angle90 -->
+        <longitude>"""+str(dms2dd(longitude))+"""</longitude>            	<!-- kml:angle180 -->
+        <latitude>"""+str(dms2dd(lat))+"""</latitude>              	<!-- kml:angle90 -->
         <altitude>"""+str(alt)+"""</altitude>              		<!-- double -->
         <heading>61.9928</heading>                <!-- kml:angle360 -->
         <tilt>83.3154</tilt>                     <!-- kml:anglepos90 -->

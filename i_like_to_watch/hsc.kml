@@ -14,11 +14,11 @@
       <flyToView>0</flyToView>
       <LookAt id="ID">
       	<gx:TimeStamp>
-          <when>2020-03-26T21:54:36</when>
+        	<when>2020-03-26T21:54:36</when>
         </gx:TimeStamp>
         <!-- specific to LookAt -->
-        <longitude>-75deg 10' 33.5"</longitude>            	<!-- kml:angle180 -->
-        <latitude>40deg 45' 41.1"</latitude>              	<!-- kml:angle90 -->
+        <longitude>-74.82402777777777</longitude>            	<!-- kml:angle180 -->
+        <latitude>40.76141666666667</latitude>              	<!-- kml:angle90 -->
         <altitude>419894</altitude>              		<!-- double -->
         <heading>61.9928</heading>                <!-- kml:angle360 -->
         <tilt>83.3154</tilt>                     <!-- kml:anglepos90 -->
@@ -26,7 +26,7 @@
         <altitudeMode>clampToGround</altitudeMode>
       </LookAt>
       <Link>
-        <href>http://18.191.77.141:25866/cgi-bin/HSCKML.py
+        <href>http://3.19.142.227:19548/cgi-bin/HSCKML.py
 </href>
         <refreshInterval>1</refreshInterval>
         <viewRefreshMode>onStop</viewRefreshMode>
